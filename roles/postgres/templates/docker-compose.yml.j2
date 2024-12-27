@@ -1,0 +1,22 @@
+{{ ansible_managed | comment }}
+---
+services:
+  postgres:
+    image: "{{ postgres_docker_image }}"
+    container_name: postgres
+    restart: unless-stopped
+    shm_size: 128mb
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
+        max-file: "10"
+    environment:
+    {%- for item in (postgres_docker_env | dict2items) %}
+      {{ item.key }}: "{{ item.value }}"
+    {%- endfor %}
+    ports:
+    - "{{ postgres_docker_host }}:{{ postgres_docker_port }}:5432"
+    volumes:
+    - "/etc/localtime:/etc/localtime:ro"
+    - "{{ postgres_docker_path }}/data:/var/lib/postgresql/data:rw"

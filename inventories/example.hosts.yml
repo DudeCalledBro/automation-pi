@@ -1,0 +1,4 @@
+all:
+  hosts:
+    semaphore.local:
+      ansible_user: pi

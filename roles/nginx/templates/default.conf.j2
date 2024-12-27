@@ -1,0 +1,18 @@
+{{ ansible_managed | comment }}
+
+{%+ for item in nginx_docker_upstreams if nginx_docker_upstreams | length -%}
+upstream {{ item.name }} {
+    {%- for server in item.servers %}
+    server {{ server }};
+    {%- endfor %}
+}
+{%+ endfor -%}
+
+{% for item in nginx_docker_vhosts %}
+server {
+    listen {{ item.listen }} {{ item.listen_extra | default('', true) }};
+    server_name {{ item.server_name }};
+
+    {{ item.config | indent(width=4) }}
+}
+{%+ endfor -%}

@@ -1,0 +1,29 @@
+name: Lint
+
+'on':
+  pull_request:
+  push:
+    branches:
+    - main
+  schedule:
+  - cron: "3 2 * * 0"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Python3
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Install Dependencies
+      run: pip3 install -r requirements.txt
+
+    - name: Lint YAML
+      run: |
+        yamllint .
+        ansible-lint

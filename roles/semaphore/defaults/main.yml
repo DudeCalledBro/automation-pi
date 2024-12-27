@@ -1,0 +1,19 @@
+# Specifies the semaphore docker image to be used.
+semaphore_docker_image: semaphoreui/semaphore:latest
+
+# Specifies the semaphore path, owner and group for semaphore.
+semaphore_docker_path: /opt/semaphore
+semaphore_docker_owner: root
+semaphore_docker_group: root
+
+# Specifies the ip address and port to be used for semaphore.
+semaphore_docker_host: 127.0.0.1
+semaphore_docker_port: 3000
+
+# Define environment variables for the semaphore container.
+semaphore_docker_env:
+  SEMAPHORE_DB_DIALECT: bolt
+  SEMAPHORE_ADMIN: admin
+  SEMAPHORE_ADMIN_PASSWORD: changeme
+  SEMAPHORE_ADMIN_NAME: Admin
+  SEMAPHORE_ADMIN_EMAIL: admin@localhost

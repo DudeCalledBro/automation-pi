@@ -1,0 +1,7 @@
+- name: Restart semaphore container
+  ansible.builtin.command: >-
+    docker compose --ansi never --progress plain restart
+  args:
+    chdir: "{{ semaphore_docker_path }}"
+  changed_when: true
+  listen: restart semaphore

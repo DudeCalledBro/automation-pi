@@ -1,0 +1,23 @@
+{{ ansible_managed | comment }}
+---
+services:
+  semaphore:
+    image: "{{ semaphore_docker_image }}"
+    container_name: semaphore
+    restart: unless-stopped
+    user: "{{ semaphore_docker_uid }}:{{ semaphore_docker_gid }}"
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
+        max-file: "10"
+    environment:
+    {%- for item in (semaphore_docker_env | dict2items) %}
+      {{ item.key }}: "{{ item.value }}"
+    {%- endfor %}
+    ports:
+    - "{{ semaphore_docker_host }}:{{ semaphore_docker_port }}:3000"
+    volumes:
+    - "/etc/localtime:/etc/localtime:ro"
+    - "{{ semaphore_docker_path }}/config:/etc/semaphore:rw"
+    - "{{ semaphore_docker_path }}/data:/var/lib/semaphore:rw"

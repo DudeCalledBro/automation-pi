@@ -1,0 +1,42 @@
+# Specifies the nginx docker image to be used.
+nginx_docker_image: nginx:alpine
+
+# Specifies the deployment path, owner and group for nginx.
+nginx_docker_path: /opt/nginx
+nginx_docker_owner: root
+nginx_docker_group: root
+
+# Specify nginx tls certificates.
+nginx_docker_certs: []
+
+# Specify nginx docker upstream hosts.
+nginx_docker_upstreams:
+- name: semaphore
+  servers:
+  - 127.0.0.1:3000
+
+# Specify nginx docker vhosts.
+# yamllint disable rule:indentation
+nginx_docker_vhosts:
+- listen: 80
+  listen_extra: default_server
+  server_name: "_"
+  config: |
+    location / {
+      proxy_pass http://semaphore/;
+      proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_buffering off;
+      proxy_request_buffering off;
+    }
+
+    location /api/ws {
+      proxy_pass http://semaphore/api/ws;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+      proxy_set_header Origin "";
+    }
+# yamllint enable rule:indentation

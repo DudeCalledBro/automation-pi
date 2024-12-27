@@ -1,0 +1,15 @@
+# Specifies the postgresql docker image to be used.
+postgres_docker_image: postgres:latest
+
+# Specifies the deployment path, owner and group for postgresql.
+postgres_docker_path: /opt/postgres
+postgres_docker_owner: root
+postgres_docker_group: root
+
+# Specifies the ip address and port to be used for postgresql.
+postgres_docker_host: 127.0.0.1
+postgres_docker_port: 5432
+
+# Define environment variables for the postgresql container.
+postgres_docker_env:
+  POSTGRES_PASSWORD: changeme

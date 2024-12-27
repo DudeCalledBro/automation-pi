@@ -1,0 +1,3 @@
+repository:
+  description: "Ansible playbooks to automate the installation of Semaphore UI with a reverse proxy setup."
+  topics: ansible, automation, docker-compose, semaphoreui

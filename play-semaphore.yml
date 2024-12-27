@@ -1,0 +1,4 @@
+- name: Install and configure SemaphoreUI
+  hosts: all
+  roles:
+  - semaphore

@@ -1,0 +1,18 @@
+# ignore ansible inventories
+inventories/*.yml
+!inventories/example*
+
+# ignore deployment certificates
+inventories/certs/*
+!inventories/certs/.gitkeep
+
+# ignore ansible group_vars
+inventories/group_vars/*/*
+!inventories/group_vars/*/example*
+
+# ginore common
+.DS_Store
+*.retry
+*/__pycache__
+*.pyc
+.cache

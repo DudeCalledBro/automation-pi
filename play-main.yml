@@ -1,0 +1,3 @@
+- ansible.builtin.import_playbook: play-postgres.yml
+- ansible.builtin.import_playbook: play-semaphore.yml
+- ansible.builtin.import_playbook: play-nginx.yml

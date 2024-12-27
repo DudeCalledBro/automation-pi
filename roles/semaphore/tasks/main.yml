@@ -1,0 +1,56 @@
+- name: Determine semaphore deployment uid
+  become_user: "{{ semaphore_docker_owner }}"
+  ansible.builtin.command: id -u
+  register: semaphore_docker_uid
+  changed_when: false
+
+- name: Determine semaphore deployment gid
+  become_user: "{{ semaphore_docker_owner }}"
+  ansible.builtin.command: id -g
+  register: semaphore_docker_gid
+  changed_when: false
+
+- name: Parse semaphore deployment uid/gid
+  ansible.builtin.set_fact:
+    semaphore_docker_uid: "{{ semaphore_docker_uid.stdout }}"
+    semaphore_docker_gid: "{{ semaphore_docker_gid.stdout }}"
+
+- name: Create semaphore directory
+  ansible.builtin.file:
+    path: "{{ semaphore_docker_path }}"
+    owner: "{{ semaphore_docker_owner }}"
+    group: "{{ semaphore_docker_group }}"
+    state: directory
+    mode: 0755
+
+- name: Create semaphore docker compose deployment
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ semaphore_docker_path }}/docker-compose.yml"
+    owner: "{{ semaphore_docker_owner }}"
+    group: "{{ semaphore_docker_group }}"
+    trim_blocks: false
+    mode: 0644
+  notify: restart semaphore
+
+- name: Validate semaphore docker compose deployment
+  ansible.builtin.command: docker compose config --quiet
+  args:
+    chdir: "{{ semaphore_docker_path }}"
+  changed_when: false
+
+- name: Startup semaphore docker compose deployment
+  ansible.builtin.command: >-
+    docker compose --ansi never --progress plain up --detach
+  args:
+    chdir: "{{ semaphore_docker_path }}"
+  register: semaphore_container_startup
+  changed_when: "'Started' in semaphore_container_startup.stdout"
+
+- name: Force all notified handlers to run at this point
+  ansible.builtin.meta: flush_handlers
+
+- name: Ensure semaphore container is reachable
+  ansible.builtin.wait_for:
+    host: "{{ semaphore_docker_host }}"
+    port: "{{ semaphore_docker_port }}"
