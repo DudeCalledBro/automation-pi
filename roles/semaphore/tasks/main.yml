@@ -1,10 +1,12 @@
 - name: Determine semaphore deployment uid
+  become: true
   become_user: "{{ semaphore_docker_owner }}"
   ansible.builtin.command: id -u
   register: semaphore_docker_uid
   changed_when: false
 
 - name: Determine semaphore deployment gid
+  become: true
   become_user: "{{ semaphore_docker_owner }}"
   ansible.builtin.command: id -g
   register: semaphore_docker_gid

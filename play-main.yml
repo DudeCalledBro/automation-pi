@@ -1,3 +1,8 @@
-- ansible.builtin.import_playbook: play-postgres.yml
-- ansible.builtin.import_playbook: play-semaphore.yml
-- ansible.builtin.import_playbook: play-nginx.yml
+- name: Include PostgreSQL Playbook
+  ansible.builtin.import_playbook: play-postgres.yml
+
+- name: Include SemaphoreUI Playbook
+  ansible.builtin.import_playbook: play-semaphore.yml
+
+- name: Include NGINX Playbook
+  ansible.builtin.import_playbook: play-nginx.yml
