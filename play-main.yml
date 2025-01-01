@@ -1,5 +1,5 @@
-- name: Include PostgreSQL Playbook
-  ansible.builtin.import_playbook: play-postgres.yml
+- name: Include MySQL Playbook
+  ansible.builtin.import_playbook: play-mysql.yml
 
 - name: Include SemaphoreUI Playbook
   ansible.builtin.import_playbook: play-semaphore.yml

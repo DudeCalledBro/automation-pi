@@ -1,0 +1,31 @@
+- name: Create mysql directory
+  ansible.builtin.file:
+    path: "{{ mysql_docker_path }}"
+    owner: "{{ mysql_docker_owner }}"
+    group: "{{ mysql_docker_group }}"
+    state: directory
+    mode: 0755
+
+- name: Create mysql docker compose deployment
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ mysql_docker_path }}/docker-compose.yml"
+    owner: "{{ mysql_docker_owner }}"
+    group: "{{ mysql_docker_group }}"
+    trim_blocks: false
+    mode: 0644
+  notify: restart mysql
+
+- name: Validate mysql docker compose deployment
+  ansible.builtin.command: docker compose config --quiet
+  args:
+    chdir: "{{ mysql_docker_path }}"
+  changed_when: false
+
+- name: Startup mysql docker compose deployment
+  ansible.builtin.command: >-
+    docker compose --ansi never --progress plain up --detach
+  args:
+    chdir: "{{ mysql_docker_path }}"
+  register: mysql_container_startup
+  changed_when: "'Started' in mysql_container_startup.stdout"

@@ -1,0 +1,15 @@
+# Specifies the mysql docker image to be used.
+mysql_docker_image: mysql:latest
+
+# Specifies the deployment path, owner and group for mysql.
+mysql_docker_path: /opt/mysql
+mysql_docker_owner: root
+mysql_docker_group: root
+
+# Specifies the ip address and port to be used for mysql.
+mysql_docker_host: 127.0.0.1
+mysql_docker_port: 3306
+
+# Define environment variables for the mysql container.
+mysql_docker_env:
+  MYSQL_ROOT_PASSWORD: changeme

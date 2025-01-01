@@ -1,0 +1,4 @@
+- name: Setup MySQL
+  hosts: all
+  roles:
+  - mysql

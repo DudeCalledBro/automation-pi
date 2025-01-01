@@ -1,0 +1,21 @@
+{{ ansible_managed | comment }}
+---
+services:
+  mysql:
+    image: "{{ mysql_docker_image }}"
+    container_name: mysql
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
+        max-file: "10"
+    environment:
+    {%- for item in (mysql_docker_env | dict2items) %}
+      {{ item.key }}: "{{ item.value }}"
+    {%- endfor %}
+    ports:
+    - "{{ mysql_docker_host }}:{{ mysql_docker_port }}:3306"
+    volumes:
+    - "/etc/localtime:/etc/localtime:ro"
+    - "{{ mysql_docker_path }}/data:/var/lib/mysql:rw"
