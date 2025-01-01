@@ -48,11 +48,3 @@
     chdir: "{{ semaphore_docker_path }}"
   register: semaphore_container_startup
   changed_when: "'Started' in semaphore_container_startup.stdout"
-
-- name: Force all notified handlers to run at this point
-  ansible.builtin.meta: flush_handlers
-
-- name: Ensure semaphore container is reachable
-  ansible.builtin.wait_for:
-    host: "{{ semaphore_docker_host }}"
-    port: "{{ semaphore_docker_port }}"

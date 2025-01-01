@@ -29,11 +29,3 @@
     chdir: "{{ postgres_docker_path }}"
   register: postgres_container_startup
   changed_when: "'Started' in postgres_container_startup.stdout"
-
-- name: Force all notified handlers to run at this point
-  ansible.builtin.meta: flush_handlers
-
-- name: Ensure postgres container is reachable
-  ansible.builtin.wait_for:
-    host: "{{ postgres_docker_host }}"
-    port: "{{ postgres_docker_port }}"
