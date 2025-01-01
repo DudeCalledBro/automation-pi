@@ -16,6 +16,12 @@ services:
     {%- endfor %}
     ports:
     - "{{ mysql_docker_host }}:{{ mysql_docker_port }}:3306"
+    networks:
+    - semaphore
     volumes:
     - "/etc/localtime:/etc/localtime:ro"
     - "{{ mysql_docker_path }}/data:/var/lib/mysql:rw"
+
+networks:
+  semaphore:
+    name: semaphore-network

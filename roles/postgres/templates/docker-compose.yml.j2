@@ -17,6 +17,12 @@ services:
     {%- endfor %}
     ports:
     - "{{ postgres_docker_host }}:{{ postgres_docker_port }}:5432"
+    networks:
+    - semaphore
     volumes:
     - "/etc/localtime:/etc/localtime:ro"
     - "{{ postgres_docker_path }}/data:/var/lib/postgresql/data:rw"
+
+networks:
+  semaphore:
+    name: semaphore-network

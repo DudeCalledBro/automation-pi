@@ -17,7 +17,13 @@ services:
     {%- endfor %}
     ports:
     - "{{ semaphore_docker_host }}:{{ semaphore_docker_port }}:3000"
+    networks:
+    - semaphore
     volumes:
     - "/etc/localtime:/etc/localtime:ro"
     - "{{ semaphore_docker_path }}/config:/etc/semaphore:rw"
     - "{{ semaphore_docker_path }}/data:/var/lib/semaphore:rw"
+
+networks:
+  semaphore:
+    name: semaphore-network
