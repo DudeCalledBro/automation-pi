@@ -1,7 +1,7 @@
 # Specifies the semaphore docker image to be used.
 semaphore_docker_image: semaphoreui/semaphore:latest
 
-# Specifies the semaphore path, owner and group for semaphore.
+# Specifies the deployment path, owner and group for semaphore.
 semaphore_docker_path: /opt/semaphore
 semaphore_docker_owner: root
 semaphore_docker_group: root

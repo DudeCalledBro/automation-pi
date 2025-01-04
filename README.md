@@ -13,7 +13,7 @@ This repository is a treasure trove for homelab enthusiasts, packed with a caref
 ## Prerequisites
 
 - Ensure you have Ansible installed (e.g. `pip3 install ansible`)
-- Ensure Docker is installed on the Home Assistant server (you may want to checkout my [ansible-docker-role](https://github.com/DudeCalledBro/ansible-role-docker))
+- Ensure Docker is installed (you may want to checkout my [ansible-docker-role](https://github.com/DudeCalledBro/ansible-role-docker))
 
 ## Setup
 
