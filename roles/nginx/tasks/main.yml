@@ -1,6 +1,6 @@
 - name: Create nginx directory
   ansible.builtin.file:
-    path: "{{ nginx_docker_path }}"
+    path: "{{ item }}"
     owner: "{{ nginx_docker_owner }}"
     group: "{{ nginx_docker_group }}"
     state: directory
